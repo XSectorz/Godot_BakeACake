@@ -16,8 +16,8 @@ var isStartMove = false
 var currentPosition = position
 var targetPosition : Vector2 = Vector2()
 
-
 #Signal
+signal warpToKitchen
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,6 +26,8 @@ func _ready():
 	position.y = 176
 	targetPosition.x = 176
 	targetPosition.y = 176
+	
+	#print(get_path())
 	
 	var inputScript = get_node("/root/gameScene/Input")
 	
@@ -43,7 +45,7 @@ func _physics_process(delta):
 	#print(position.y)
 	#print("-----------")
 	var isDoneMove = false
-	if(isStartMove):
+	if(isStartMove && playerGlobal.gameModeType == 0):
 		if(moveTimer.is_stopped()):
 			if(position.x == targetPosition.x && position.y == targetPosition.y):
 				moveLogic()
@@ -78,6 +80,7 @@ func _physics_process(delta):
 					
 					if(position.x ==  (mapArray.map1WinPosition.x*32)+16 && position.y ==  (mapArray.map1WinPosition.y*32)+16):
 						print("WIN")
+						emit_signal("warpToKitchen")
 					else:
 						for itemFood in get_tree().current_scene.get_node("foodItems").get_children():
 							if(position.x == itemFood.position.x && position.y ==  itemFood.position.y):

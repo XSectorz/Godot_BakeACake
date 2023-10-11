@@ -9,6 +9,7 @@ onready var exampleText = get_node("startNode/exampleText")
 var prevtextLength = 0;
 
 signal playerConfirmMove(data)
+signal checkAnswer(data)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -51,6 +52,9 @@ func _on_inputBox_text_changed(new_text):
 
 func _on_inputBox_text_entered(new_text):
 	print("Entered")
-	emit_signal("playerConfirmMove",inputBox.text)
+	if(playerGlobal.gameModeType == 0):
+		emit_signal("playerConfirmMove",inputBox.text)
+	else:
+		emit_signal("checkAnswer",inputBox.text)
 	inputBox.set_text("")
 	exampleText.show()

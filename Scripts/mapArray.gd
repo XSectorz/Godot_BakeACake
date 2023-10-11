@@ -7,7 +7,11 @@ var map1VectorData = [Vector2(5,5),Vector2(6,5),Vector2(7,5),Vector2(8,5),Vector
 					,Vector2(10,7),Vector2(11,7),Vector2(12,7),Vector2(13,7),Vector2(14,7),Vector2(15,7),Vector2(16,7),Vector2(17,7),Vector2(14,8),Vector2(14,9)
 					,Vector2(14,6),Vector2(14,5),Vector2(14,4),Vector2(13,4),Vector2(12,4),Vector2(11,4)]
 var map1WinPosition : Vector2 = Vector2(17,7)
-var map1ItemPosition = [Vector2(14,4),Vector2(14,9)]
+
+var mapItemTypeList = [[0,1,2,3],[0,1,2]]
+var mapItemSize = [6,4,6]
+var mapItemPos = [[Vector2(14,4),Vector2(14,9),Vector2(14,8),Vector2(14,7),Vector2(14,6),Vector2(14,5)]]
+var currentMapItemList = []
 
 #Global variable
 var currentMapID = 1
@@ -24,9 +28,17 @@ func _ready():
 
 
 func createItemsOnMap(mapID):
-	if(mapID == 1):
-		for data in map1ItemPosition:
-			var foodItem = itemPreload.instance()
-			get_tree().current_scene.get_node("foodItems").call_deferred("add_child",foodItem)
-			foodItem.call_deferred("_CreateObject",data,0)
+	var random = RandomNumberGenerator.new()
+	random.randomize()
+	
+	for data in mapItemPos[currentMapID-1]:
+		var n = random.randi_range(0, mapItemTypeList[currentMapID-1].size()-1)
+		var foodItem = itemPreload.instance()
+		get_tree().current_scene.get_node("foodItems").call_deferred("add_child",foodItem)
+		foodItem.call_deferred("_CreateObject",data,n)
+		currentMapItemList.append(n)
+		
+	
+	for itemList in currentMapItemList:
+		print("Item: " + str(itemList))
 		
