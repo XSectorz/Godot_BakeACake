@@ -34,7 +34,7 @@ func _ready():
 	#Connect Signal
 	inputScript.connect("playerConfirmMove",self,"startMoveSignal")
 	
-	print(mapArray.map1Index)
+	#print(mapArray.map1Index)
 
 
 func _physics_process(delta):
@@ -85,10 +85,10 @@ func _physics_process(delta):
 						for itemFood in get_tree().current_scene.get_node("foodItems").get_children():
 							if(position.x == itemFood.position.x && position.y ==  itemFood.position.y):
 								print("GET! ITEM: " + str(itemFood.foodType) + " Pos: " + str(itemFood.position))
-								playerInventory.items[itemFood.foodType] += 1
+								playerGlobal.items[itemFood.foodType] += 1
 								
 								var UIText = get_tree().current_scene.get_node("playerItems/UI/BackgroundItem" + str(itemFood.foodType) + "/ItemLabel")
-								UIText.text = str(playerInventory.items[itemFood.foodType])
+								UIText.text = str(playerGlobal.items[itemFood.foodType])
 								
 								
 								itemFood.queue_free()

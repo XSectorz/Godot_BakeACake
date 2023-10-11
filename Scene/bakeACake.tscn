@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/bakeACake.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Sprites/Items/foodItem2.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Items/foodItem4.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/Items/foodItem3.png" type="Texture" id=9]
+[ext_resource path="res://Scene/menuNextRound.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scene/menuGameOver.tscn" type="PackedScene" id=11]
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 4 )
@@ -38,9 +40,21 @@ animations = [ {
 size = 80
 font_data = ExtResource( 1 )
 
+[sub_resource type="DynamicFont" id=10]
+size = 28
+font_data = ExtResource( 1 )
+
 [sub_resource type="DynamicFont" id=7]
 size = 40
 font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.0235294, 0.694118, 0.231373, 0.690196 )
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="bakeACakeScene" type="Node2D"]
 script = ExtResource( 2 )
@@ -79,7 +93,7 @@ scale = Vector2( 6.04167, 6.64583 )
 z_index = 3
 frames = SubResource( 6 )
 animation = "IDLE"
-frame = 3
+frame = 1
 playing = true
 
 [node name="itemRegex" type="Node2D" parent="."]
@@ -90,7 +104,7 @@ margin_left = 171.0
 margin_top = 24.0
 margin_right = 901.0
 margin_bottom = 405.0
-color = Color( 0.317647, 0.317647, 0.317647, 0.792157 )
+color = Color( 0.317647, 0.317647, 0.317647, 0.541176 )
 
 [node name="bakeACakeText1" type="Label" parent="itemRegex"]
 visible = false
@@ -195,6 +209,15 @@ expand = true
 [node name="itemGuide" type="Node2D" parent="."]
 z_index = 3001
 
+[node name="INFO" type="Label" parent="itemGuide"]
+margin_left = 414.0
+margin_top = 58.0
+margin_right = 682.0
+margin_bottom = 99.0
+custom_colors/font_color = Color( 0.996078, 0, 0, 1 )
+custom_fonts/font = SubResource( 10 )
+align = 1
+
 [node name="itemGuide1" type="TextureRect" parent="itemGuide"]
 margin_left = 242.0
 margin_top = 210.0
@@ -228,10 +251,11 @@ custom_colors/font_color = Color( 0.937255, 0.929412, 0.686275, 1 )
 custom_fonts/font = SubResource( 7 )
 
 [node name="itemGuide3" type="TextureRect" parent="itemGuide"]
-margin_left = 550.0
+margin_left = 544.0
 margin_top = 300.0
-margin_right = 623.0
+margin_right = 617.0
 margin_bottom = 374.0
+rect_scale = Vector2( 0.85, 0.85 )
 texture = ExtResource( 9 )
 expand = true
 
@@ -248,6 +272,7 @@ margin_left = 550.0
 margin_top = 210.0
 margin_right = 623.0
 margin_bottom = 284.0
+rect_scale = Vector2( 0.75, 0.8 )
 texture = ExtResource( 8 )
 expand = true
 
@@ -258,3 +283,37 @@ margin_right = 303.0
 margin_bottom = 58.0
 custom_colors/font_color = Color( 0.937255, 0.929412, 0.686275, 1 )
 custom_fonts/font = SubResource( 7 )
+
+[node name="progressBar" type="Node2D" parent="."]
+z_index = 4096
+
+[node name="timeLeftBar" type="ProgressBar" parent="progressBar"]
+margin_left = 171.0
+margin_top = 24.0
+margin_right = 898.0
+margin_bottom = 49.0
+custom_styles/fg = SubResource( 8 )
+custom_styles/bg = SubResource( 9 )
+max_value = 15.0
+value = 10.0
+percent_visible = false
+
+[node name="nextroundUI" parent="." instance=ExtResource( 10 )]
+visible = false
+position = Vector2( -214, -67 )
+scale = Vector2( 1.5, 1.5 )
+z_index = 4000
+
+[node name="gameOverUI" parent="." instance=ExtResource( 11 )]
+visible = false
+position = Vector2( -214, -67 )
+scale = Vector2( 1.5, 1.5 )
+z_index = 4000
+
+[node name="timer" type="Node2D" parent="."]
+
+[node name="infoTimer" type="Timer" parent="timer"]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="timer/infoTimer" to="." method="_on_infoTimer_timeout"]

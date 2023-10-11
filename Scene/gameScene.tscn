@@ -101,12 +101,10 @@ font_data = SubResource( 20 )
 [node name="gameScene" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-visible = false
 position = Vector2( -1, -6 )
 z_index = 998
 
 [node name="TileMap" parent="." instance=ExtResource( 2 )]
-visible = false
 
 [node name="Input" type="Node2D" parent="."]
 z_index = 999
@@ -160,6 +158,7 @@ position = Vector2( 307, 476 )
 scale = Vector2( 1.59375, 1.625 )
 frames = SubResource( 19 )
 animation = "IDLE"
+frame = 2
 playing = true
 
 [node name="bakeACakeScene" parent="." instance=ExtResource( 6 )]

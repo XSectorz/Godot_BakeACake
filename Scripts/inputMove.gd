@@ -35,12 +35,15 @@ func _on_inputBox_text_changed(new_text):
 			&& new_text[textLength-1] != 'W' && new_text[textLength-1] != 'w'
 			&& new_text[textLength-1] != 'S' && new_text[textLength-1] != 's'
 			&& new_text[textLength-1] != 'D' && new_text[textLength-1] != 'd'):
-			if(new_text.length() > 1):
-				inputBox.set_text(new_text.substr(0, textLength - 1))
-				inputBox.set_cursor_position(inputBox.text.length())
-				prevtextLength = inputBox.text.length()
+			if(playerGlobal.gameModeType == 0):
+				if(new_text.length() > 1):
+					inputBox.set_text(new_text.substr(0, textLength - 1))
+					inputBox.set_cursor_position(inputBox.text.length())
+					prevtextLength = inputBox.text.length()
+				else:
+					inputBox.set_text("")
 			else:
-				inputBox.set_text("")
+				prevtextLength = inputBox.text.length()
 		else:
 			prevtextLength = inputBox.text.length()
 		
@@ -55,6 +58,7 @@ func _on_inputBox_text_entered(new_text):
 	if(playerGlobal.gameModeType == 0):
 		emit_signal("playerConfirmMove",inputBox.text)
 	else:
+		print("COME")
 		emit_signal("checkAnswer",inputBox.text)
 	inputBox.set_text("")
 	exampleText.show()

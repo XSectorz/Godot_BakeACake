@@ -39,6 +39,6 @@ func createItemsOnMap(mapID):
 		currentMapItemList.append(n)
 		
 	
-	for itemList in currentMapItemList:
-		print("Item: " + str(itemList))
+	#for itemList in currentMapItemList:
+	#	print("Item: " + str(itemList))
 		

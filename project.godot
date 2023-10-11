@@ -17,7 +17,6 @@ config/icon="res://icon.png"
 [autoload]
 
 mapArray="*res://Scripts/mapArray.gd"
-playerInventory="*res://Scripts/playerInventory.gd"
 itemsImage="*res://Scripts/itemsImage.gd"
 playerGlobal="*res://Scripts/playerGlobal.gd"
 
