@@ -25,6 +25,10 @@ func _ready():
 func _on_inputBox_text_changed(new_text):
 	#print(get_path())
 	#print(new_text)
+		
+	if(playerGlobal.isPlayerAlreadyInput && playerGlobal.gameModeType == 0):
+		inputBox.set_text("")
+		return
 	var textLength = new_text.length()
 	#print(textLength)
 	
@@ -46,19 +50,21 @@ func _on_inputBox_text_changed(new_text):
 				prevtextLength = inputBox.text.length()
 		else:
 			prevtextLength = inputBox.text.length()
-		
-	#print("PREV: " + str(prevtextLength) + " CUR " + str(textLength))
 	if(prevtextLength > 0):
 		exampleText.hide()
 	else:
 		exampleText.show()
+	#print("PREV: " + str(prevtextLength) + " CUR " + str(textLength))
 
 func _on_inputBox_text_entered(new_text):
-	print("Entered")
+	#print("Entered")
 	if(playerGlobal.gameModeType == 0):
 		emit_signal("playerConfirmMove",inputBox.text)
+		playerGlobal.isPlayerAlreadyInput = true
+		exampleText.text = "WALKING..."
 	else:
-		print("COME")
+		#print("COME")
 		emit_signal("checkAnswer",inputBox.text)
 	inputBox.set_text("")
 	exampleText.show()
+	

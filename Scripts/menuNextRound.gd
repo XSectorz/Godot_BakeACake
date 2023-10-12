@@ -7,4 +7,5 @@ func _ready():
 
 
 func _on_nextButton_pressed():
+	hide()
 	emit_signal("hideKitchen")

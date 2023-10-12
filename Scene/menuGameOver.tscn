@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Sprites/Resources/tree1.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Resources/tree2.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=6]
 [ext_resource path="res://Sprites/Resources/rock1.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Resources/trophys.png" type="Texture" id=8]
+[ext_resource path="res://Scripts/menuGameOver.gd" type="Script" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -20,6 +21,7 @@ size = 24
 font_data = ExtResource( 6 )
 
 [node name="gameOverUI" type="Node2D"]
+script = ExtResource( 9 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 1025.0
@@ -119,3 +121,5 @@ margin_bottom = 314.0
 custom_colors/font_color = Color( 0.843137, 0.552941, 0.27451, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "main  menu"
+
+[connection signal="pressed" from="BUTTON/nextButton" to="." method="_on_nextButton_pressed"]

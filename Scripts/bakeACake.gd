@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var playerNode = get_node("/root/gameScene/player/playerBody")
+onready var tileMapNode = get_node("/root/gameScene/TileMap")
 onready var itemGuideList = [get_node("itemGuide/itemGuide1/itemGuideText"),
 							get_node("itemGuide/itemGuide2/itemGuideText"),
 							get_node("itemGuide/itemGuide3/itemGuideText"),
@@ -13,6 +14,10 @@ onready var infoLabel = get_node("itemGuide/INFO")
 onready var infoTimer = get_node("timer/infoTimer")
 onready var itemNode = get_node("/root/gameScene/foodItems")
 onready var inputScript = get_node("/root/gameScene/Input")
+onready var playerItems = get_node("/root/gameScene/playerItems")
+onready var enemyLists = get_node("/root/gameScene/enemyLists")
+onready var winPos = get_node("/root/gameScene/winPos")
+onready var gameSceneNode = get_node("/root/gameScene")
 
 var MAX_TIME_OUT = 3
 
@@ -29,15 +34,46 @@ func _ready():
 	inputScript.connect("checkAnswer",self,"_checkAnswerInput")
 	playerNode.connect("warpToKitchen",self,"_warpKitChen")
 	nextRoundUI.connect("hideKitchen",self,"_changeToGameMode0")
+	gameOverUI.connect("resetGameData",self,"_resetAllData")
 	hide()
-	_warpKitChen()
+	#_warpKitChen()
+
+func _resetAllData():
+	self.hide()
+	inputScript.hide()
+	playerItems.hide()
+	
+	playerGlobal.gameModeType = 0
+	playerGlobal.pScore = 0
+	playerGlobal.items = [0,0,0,0]
+	playerGlobal.isPlayerAlreadyInput = false
+	playerGlobal.isPlayerFinish = false
+	mapArray.currentMapItemList.clear()
+	
+	for i in range(0,4):
+		var UIText = get_tree().current_scene.get_node("playerItems/UI/BackgroundItem" + str(i) + "/ItemLabel")
+		UIText.text = str(0)
+	
+	#print("Reset Data and go to backmenu")
 
 func _changeToGameMode0():
 	
 	self.hide()
 	itemNode.show()
 	playerNode.show()
+	tileMapNode.show()
+	enemyLists.show()
+	winPos.show()
 	playerGlobal.gameModeType = 0
+	playerGlobal.isPlayerFinish = false
+	playerGlobal.isPlayerAlreadyInput = false
+	mapArray.currentMapItemList.clear()
+	mapArray.currentMapID = 2
+	mapArray.createItemsOnMap()
+	mapArray.spawnEnemy()
+	mapArray.spawnChest()
+	gameSceneNode._randPlayerSpawn()
+	
 	
 func _warpKitChen():
 	#print("WARP!!")
@@ -45,6 +81,9 @@ func _warpKitChen():
 	#get_tree().change_scene("res://Scene/bakeACake.tscn")
 	
 	playerNode.hide()
+	tileMapNode.hide()
+	enemyLists.hide()
+	winPos.hide()
 	attemps = 0
 	resetData()
 	_hideElements()
@@ -76,7 +115,7 @@ func _checkAnswerInput(data):
 	infoTimer.stop()
 	
 	
-	if(data == stringAnswer):
+	if(data.to_upper() == stringAnswer):
 		var isMatchReq = true
 		for index in range(0,4):
 			if(playerGlobal.items[index] < itemAmount[index]):
@@ -89,10 +128,11 @@ func _checkAnswerInput(data):
 			for i in range(0,4):
 				var nodeItemLabel = get_node("/root/gameScene/playerItems/UI/BackgroundItem" + str(i) + "/ItemLabel")
 				nodeItemLabel.text = str(playerGlobal.items[i] - itemAmount[i])
-			print("Pass")
+			#print("Pass")
 			
 			var scoreLabel = nextRoundUI.get_node("UI/textLabel2")
 			_addScore()
+			mapArray.currentMapID = 2
 			
 			scoreLabel.text = str(playerGlobal.pScore)
 			nextRoundUI.show()
@@ -117,7 +157,7 @@ func _randomReciept():
 	#print("Base Amount : " + str(baseAmount))
 	#print("Rand Amount : " + str(amountReceipt))
 	
-	tempcurrentMapItemList = mapArray.currentMapItemList.duplicate()
+	tempcurrentMapItemList = mapArray.currentMapItemList.duplicate(true)
 	#for data in tempcurrentMapItemList:
 	#	print("items:" + str(data))
 	#print("-------------------------")
@@ -164,11 +204,10 @@ func resetData():
 	_randomReciept()
 
 func _gameOver():
-	print("GAME OVER!")
+	#print("GAME OVER!")
 	gameOverUI.show()
 	var scoreLabel = gameOverUI.get_node("UI/textLabel2")
 	scoreLabel.text = str(playerGlobal.pScore)
-	pass
 
 func timeOut():
 	attemps += 1

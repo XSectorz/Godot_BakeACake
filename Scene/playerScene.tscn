@@ -94,6 +94,10 @@ animations = [ {
 extents = Vector2( 14.082, 19.2773 )
 
 [node name="player" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 21.0 ],
+"_edit_vertical_guides_": [ 14.0 ]
+}
 
 [node name="playerBody" type="KinematicBody2D" parent="."]
 script = ExtResource( 2 )
@@ -102,12 +106,12 @@ script = ExtResource( 2 )
 scale = Vector2( 2.65625, 2.875 )
 frames = SubResource( 18 )
 animation = "MOVE_BACKWARD"
-frame = 3
+frame = 2
 playing = true
 
 [node name="HitBox" type="CollisionShape2D" parent="playerBody"]
 shape = SubResource( 19 )
 
 [node name="Timer" type="Timer" parent="playerBody"]
-wait_time = 0.1
+wait_time = 0.05
 one_shot = true

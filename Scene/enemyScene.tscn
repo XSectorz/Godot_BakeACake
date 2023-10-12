@@ -1,0 +1,58 @@
+[gd_scene load_steps=35 format=2]
+
+[ext_resource path="res://Sprites/Enemy/2.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Enemy/1.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Enemy/4.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Enemy/3.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Enemy/5.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Enemy/25.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Enemy/26.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Enemy/27.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Enemy/30.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Enemy/31.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Enemy/19.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Enemy/20.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/Enemy/16.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/Enemy/17.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/Enemy/18.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/Enemy/29.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/Enemy/28.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/Enemy/23.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/Enemy/24.png" type="Texture" id=19]
+[ext_resource path="res://Sprites/Enemy/21.png" type="Texture" id=20]
+[ext_resource path="res://Sprites/Enemy/22.png" type="Texture" id=21]
+[ext_resource path="res://Sprites/Enemy/9.png" type="Texture" id=22]
+[ext_resource path="res://Sprites/Enemy/10.png" type="Texture" id=23]
+[ext_resource path="res://Sprites/Enemy/13.png" type="Texture" id=24]
+[ext_resource path="res://Sprites/Enemy/6.png" type="Texture" id=25]
+[ext_resource path="res://Sprites/Enemy/7.png" type="Texture" id=26]
+[ext_resource path="res://Sprites/Enemy/8.png" type="Texture" id=27]
+[ext_resource path="res://Sprites/Enemy/11.png" type="Texture" id=28]
+[ext_resource path="res://Sprites/Enemy/14.png" type="Texture" id=29]
+[ext_resource path="res://Sprites/Enemy/15.png" type="Texture" id=30]
+[ext_resource path="res://Sprites/Enemy/12.png" type="Texture" id=31]
+[ext_resource path="res://Sprites/Enemy/32.png" type="Texture" id=32]
+[ext_resource path="res://Scripts/enemyScene.gd" type="Script" id=33]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 31 ), ExtResource( 24 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 32 ) ],
+"loop": true,
+"name": "IDLE",
+"speed": 5.0
+} ]
+
+[node name="enemy" type="Node2D"]
+script = ExtResource( 33 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 21.0 ],
+"_edit_vertical_guides_": [ 14.0 ]
+}
+
+[node name="enemyAnimated" type="AnimatedSprite" parent="."]
+position = Vector2( 1.5, -4.33594 )
+scale = Vector2( 0.6375, 0.657335 )
+frames = SubResource( 1 )
+animation = "IDLE"
+speed_scale = 5.0
+playing = true
