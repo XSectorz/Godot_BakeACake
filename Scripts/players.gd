@@ -19,6 +19,8 @@ var isStartMove = false
 var currentPosition = position
 var targetPosition : Vector2 = Vector2()
 
+onready var playerAnimated = get_node("playerAnimated")
+
 #Signal
 signal warpToKitchen
 
@@ -47,6 +49,7 @@ func _resetAllData():
 	playerItems.hide()
 	nodeTileMap.hide()
 	
+	playerAnimated.play("MOVE_BACKWARD")
 	playerGlobal.gameModeType = 0
 	playerGlobal.pScore = 0
 	playerGlobal.items = [0,0,0,0]
@@ -122,7 +125,7 @@ func _physics_process(delta):
 									var UIText = get_tree().current_scene.get_node("playerItems/UI/BackgroundItem" + str(itemFood.foodType) + "/ItemLabel")
 									UIText.text = str(playerGlobal.items[itemFood.foodType])
 									
-									
+									mapArray.nodeCollectSound.play()
 									itemFood.queue_free()
 									break
 							for enemy in get_tree().current_scene.get_node("enemyLists").get_children():
@@ -132,6 +135,7 @@ func _physics_process(delta):
 									var scoreLabel = gameoverUI.get_node("UI/textLabel2")
 									scoreLabel.text = str(playerGlobal.pScore)
 									isStartMove = false
+									mapArray.nodeGameoverSound.play()
 									return
 					
 					#print("MOVE END AT X : " + str(position.x) + " TargetPos: " + str(targetPosition.x))
@@ -152,15 +156,16 @@ func startMoveSignal(data):
 	isStartMove = true
 
 func moveLogic():
-	print("CURR : " + str(currentMoveIndex) + " SIZE: " + str(moveArray.size()))
+	#print("CURR : " + str(currentMoveIndex) + " SIZE: " + str(moveArray.size()))
 	if(currentMoveIndex == moveArray.size()):
-		print("END MOVEMENT " + str(playerGlobal.isPlayerFinish));
+		#print("END MOVEMENT " + str(playerGlobal.isPlayerFinish));
 		if(!playerGlobal.isPlayerFinish):
 			gameoverUI.show()
 			var scoreLabel = gameoverUI.get_node("UI/textLabel2")
 			scoreLabel.text = str(playerGlobal.pScore)
 			isStartMove = false
-			print("LOSE")
+			mapArray.nodeGameoverSound.play()
+			#print("LOSE")
 			return
 	else:
 		#print(moveArray[currentMoveIndex])
@@ -168,13 +173,17 @@ func moveLogic():
 		var tempPos : Vector2 = position
 		
 		if(moveArray[currentMoveIndex] == 'D' || moveArray[currentMoveIndex] == 'd'):
-			 tempPos.x = tempPos.x + 32
+			tempPos.x = tempPos.x + 32
+			playerAnimated.play("MOVE_RIGHT")
 		elif(moveArray[currentMoveIndex] == 'A' || moveArray[currentMoveIndex] == 'a'):
-			 tempPos.x = tempPos.x - 32
+			tempPos.x = tempPos.x - 32
+			playerAnimated.play("MOVE_LEFT")
 		elif(moveArray[currentMoveIndex] == 'W' || moveArray[currentMoveIndex] == 'w'):
-			 tempPos.y = tempPos.y - 32
+			tempPos.y = tempPos.y - 32
+			playerAnimated.play("MOVE_FORWARD")
 		elif(moveArray[currentMoveIndex] == 'S' || moveArray[currentMoveIndex] == 's'):
-			 tempPos.y = tempPos.y + 32
+			tempPos.y = tempPos.y + 32
+			playerAnimated.play("MOVE_BACKWARD")
 		
 		var isCanMove = false
 		for data in mapArray.map1VectorData:

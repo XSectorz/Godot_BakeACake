@@ -17,6 +17,9 @@ var map1WinPosition : Vector2 = Vector2(17,7)
 var pSpawnPosition = [Vector2(5,5),Vector2(25,4),Vector2(23,4),Vector2(27,7),Vector2(26,6),Vector2(9,7),Vector2(12,12),Vector2(8,4),Vector2(8,3),Vector2(10,7)]
 #var pSpawnPosition = [Vector2(5,5)]
 
+onready var nodeCollectSound = get_node("/root/gameScene/CollectSound")
+onready var nodeGameoverSound = get_node("/root/gameScene/GameoverSound")
+
 var mapItemTypeList = [[0,1,2],[0,1,2,3]]
 var mapItemSize = [3,6]
 var mapItemPos = [[Vector2(14,4),Vector2(14,8),Vector2(14,6),Vector2(19,7),Vector2(24,6),Vector2(12,7),Vector2(14,5),Vector2(11,7),Vector2(18,10),Vector2(24,11),Vector2(13,4)

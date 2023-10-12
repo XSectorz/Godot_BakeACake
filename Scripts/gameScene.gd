@@ -8,11 +8,15 @@ onready var nodeFoodItems = get_node("foodItems")
 onready var nodePlayerItems = get_node("playerItems")
 onready var nodeEnemyLists = get_node("enemyLists")
 onready var nodeWinPos = get_node("/root/gameScene/winPos")
+onready var nodeSound = get_node("/root/gameScene/BGSound")
+onready var nodeInfo = get_node("/root/gameScene/GameInfo")
+onready var nodeText = get_node("/root/gameScene/Input/startNode/exampleText")
 
 
 func _ready():
 	nodeMainMenu.connect("gameStart",self,"_startGame")
 	nodePlayer.hide()
+	nodeSound.play()
 	
 func _randPlayerSpawn():
 	
@@ -35,6 +39,8 @@ func _startGame():
 	nodeEnemyLists.show()
 	nodeWinPos.show()
 	nodeMainMenu.hide()
+	nodeInfo.hide()
+	nodeText.text = "INPUT HERE"
 	playerGlobal.isPlayerFinish = false
 	playerGlobal.isPlayerAlreadyInput = false
 	mapArray.currentMapItemList.clear()

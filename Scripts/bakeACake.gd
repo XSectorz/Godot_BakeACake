@@ -136,6 +136,7 @@ func _checkAnswerInput(data):
 			
 			scoreLabel.text = str(playerGlobal.pScore)
 			nextRoundUI.show()
+			mapArray.nodeCollectSound.play()
 			return
 	else:
 		infoLabel.text = "RECEIPTS WRONG!"
@@ -205,6 +206,7 @@ func resetData():
 
 func _gameOver():
 	#print("GAME OVER!")
+	mapArray.nodeGameoverSound.play()
 	gameOverUI.show()
 	var scoreLabel = gameOverUI.get_node("UI/textLabel2")
 	scoreLabel.text = str(playerGlobal.pScore)
